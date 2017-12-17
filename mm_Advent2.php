@@ -1,0 +1,1 @@
+<?php$file = fopen("Advent2.tsv","r");$array = array();while(!feof($file)){  $array[] = fgetcsv($file,200,"\t");}fclose($file);function advent_two($array) {    $answer = 0;    foreach($array as $line){        $answer += max($line)-min($line);    }    return $answer;}printf(advent_two($array));
