@@ -1,5 +1,4 @@
 <?php
-
 $input = "0 <-> 199, 1774
 1 <-> 350, 1328, 1920
 2 <-> 477, 984, 1419
@@ -2013,26 +2012,20 @@ function advent12setup($input){
     return $data;
 }
 
-$data = advent12setup($input);
-
-echo "<pre>",print_r($data),"</pre>";
-
 function advent12($data){
-    return 0;
-}
-
-
-function run_the_code($input) {
     $nullGroup = [];
-    $rec = function($root) use (&$rec, &$nullGroup, $groups) {
+    $rec = function($root) use (&$rec, &$nullGroup, $data) {
         if (!in_array($root, $nullGroup)) {
             $nullGroup[] = $root;
-            foreach ($groups[$root] as $ch) {
+            foreach ($data[$root] as $ch) {
                 $rec($ch);
             }
         }
     };
     $rec('0');
-
     return count($nullGroup);
 }
+
+
+$data = advent12setup($input);
+echo advent12($data);
