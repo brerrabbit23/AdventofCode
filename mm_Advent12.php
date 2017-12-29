@@ -2001,12 +2001,38 @@ $input = "0 <-> 199, 1774
 1998 <-> 1300
 1999 <-> 175, 1161";
 
-$data = array();
+function advent12setup($input){
+    $lines = explode(PHP_EOL, $input);
+    $data = array();
+    foreach ($lines as $line) {
+        if (preg_match('/(\d+) <-> (.*)/', $line, $matches)) {
+            list($_, $a, $b) = $matches;
+            $data[$a] = array_map('trim', explode(',', $b));
+        }
+    }
+    return $data;
+}
 
+$data = advent12setup($input);
 
+echo "<pre>",print_r($data),"</pre>";
 
 function advent12($data){
     return 0;
 }
 
 
+function run_the_code($input) {
+    $nullGroup = [];
+    $rec = function($root) use (&$rec, &$nullGroup, $groups) {
+        if (!in_array($root, $nullGroup)) {
+            $nullGroup[] = $root;
+            foreach ($groups[$root] as $ch) {
+                $rec($ch);
+            }
+        }
+    };
+    $rec('0');
+
+    return count($nullGroup);
+}
